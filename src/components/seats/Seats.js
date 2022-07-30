@@ -6,21 +6,40 @@ import Footer from "../footer/Footer"
 import styled from "styled-components"
 import Loading from "../loading/Loading"
 import Seat from "./Seat"
+import Forms from "../forms/Forms"
 
 export default function Seats() {
     const [sessionInf, setSessionInf] = useState([])
     const [seat, setSeat] = useState([])
     const { idSessao } = useParams()
+    let [ids, setIds] =useState([])
+    let [successForm, setSuccessForm] = useState()
+
+    const [form, setForm] = useState({
+        ids: ids,
+        name: '',
+        cpf: ''
+    })
+
+    
+
+    useEffect(()=> {
+        let organize = ids.sort((a, b) => a - b)
+
+        setForm({
+            ...form,
+            ids: organize
+          })
+    }, [ids])
+
 
     useEffect(() => {
         
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${idSessao}/seats`)
         promisse.then((r) => {setSessionInf(r.data)
                                 setSeat(r.data.seats)
-                                })
+                                setSuccessForm(r.data)})
     },[idSessao])
-
-    console.log(seat)
 
     if(sessionInf.length === 0){
         return <Loading/>
@@ -30,7 +49,7 @@ export default function Seats() {
                 <Description>Selecione o(s) assento(s)</Description>
                 <Container>
                     <List>
-                        {seat.map((r, index) => <Seat isAvailable={r.isAvailable} key={index}>{r.name}</Seat>)}
+                        {seat.map((r, index) => <Seat isAvailable={r.isAvailable} key={index} seatID={r.id}  ids={ids} setIds={setIds} form={form} setForm={setForm}>{r.name}</Seat>)}
                     </List>
                     <div className="side">
                         <span>
@@ -46,6 +65,7 @@ export default function Seats() {
                             <p>Indisponivel</p>
                         </span>
                     </div>
+                    <Forms form={form} setForm={setForm} ids={ids} successForm={successForm}/>
                 </Container>
                 <Footer title={sessionInf.movie.title} posterURL={sessionInf.movie.posterURL} sessionDay={sessionInf.day.weekday} sessionHour={sessionInf.name}/>
             </>
@@ -85,14 +105,13 @@ const Container = styled.div`
     }
 `
 const List = styled.div`
-    &&{  width: 375px;
+    &&{
         display: grid;
         grid-template-columns: repeat(10, 1fr);
         grid-template-rows: repeat(5, 1fr);
         grid-column-gap: 8px;
         grid-row-gap: 19px;}
 `
-
 const Circle = styled.div`
 
     margin: 0 42px;
