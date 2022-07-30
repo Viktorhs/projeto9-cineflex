@@ -1,10 +1,10 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
-
 
 export default function Header(){
     return(
         <HeaderBar>
-            CINEFLEX
+            <Link to='/'>CINEFLEX</Link>
         </HeaderBar>
     )
 }

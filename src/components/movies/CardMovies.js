@@ -1,16 +1,13 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 
-export default function CardMovie({moviePoster, movieId}) {
+export default function CardMovie({moviePoster, movieID}) {
     return(
-
-        <link to ={`/sessoes/${movieId}`}>
+        <Link to ={`/sessoes/${movieID}`}>
             <Container>
                 <img src = {moviePoster} alt = 'movie-poster'/>
             </Container>
-        </link>
-
-
+        </Link>
     )
 }
 
