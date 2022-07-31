@@ -61,7 +61,10 @@ const Button = styled.div`
     text-decoration: none;
     cursor: pointer;
 
-        
+    &:active{
+        filter: brightness(85%);
+        transform: translateY(1px);
+    }
 
     &&:hover{
         filter: brightness(90%);

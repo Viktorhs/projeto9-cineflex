@@ -1,7 +1,7 @@
     import { useState } from "react"
 import styled from "styled-components"
 
-export default function Seat({isAvailable, children, ids, setIds, seatID}){
+export default function Seat({isAvailable, children, ids, setIds, seatID, seatNumber, setSeatNumber}){
     const [color,setColor] = useState([['#C3CFD9', '#7B8B99'],['#FBE192', '#F7C52B']])
     let status
     let available
@@ -11,11 +11,14 @@ export default function Seat({isAvailable, children, ids, setIds, seatID}){
     function selectSeat(id){
         if(selected === false){
             setIds([...ids, seatID])
+            setSeatNumber([...seatNumber, id])
             setColor([['#8DD7CF', '#1AAE9E']])
             setSelected(true)
         }else if(selected === true){
             let removeID = ids.filter(a => a !== seatID)
+            let removeSeat = seatNumber.filter(a => a !== id)
             setIds([...removeID])
+            setSeatNumber([...removeSeat])
             setSelected(false)
             setColor([['#C3CFD9', '#7B8B99']])
         }

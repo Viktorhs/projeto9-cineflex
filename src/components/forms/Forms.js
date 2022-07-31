@@ -2,7 +2,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
-export default function Forms({form, setForm, ids, successForm}) {
+export default function Forms({form, setForm, ids, successForm,setSuccessForm}) {
 
     let navigate = useNavigate()
 
@@ -18,9 +18,15 @@ export default function Forms({form, setForm, ids, successForm}) {
     function reservar(e){
         
         e.preventDefault()
-        console.log(form)
+
+        setSuccessForm({
+            ...successForm,
+            name: form.name,
+            cpf: form.cpf,
+        })
+
         const promisse = axios.post('https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many', form)
-        promisse.then(() => navigate('/sucesso',successForm))
+        promisse.then(() => navigate('/sucesso'))
     }
 
     return(

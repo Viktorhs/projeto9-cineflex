@@ -8,7 +8,7 @@ export default function Footer({title, posterURL, sessionDay, sessionHour}) {
             </div>
             <span>
                 <h3>{title}</h3>
-                <h3>{sessionDay} - {sessionHour}</h3>
+                {(!sessionHour) ? <h3>{sessionDay}</h3> : <h3>{sessionDay} - {sessionHour}</h3>}
             </span>
         </SessionInf>
     

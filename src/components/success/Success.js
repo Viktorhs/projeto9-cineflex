@@ -1,10 +1,22 @@
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 
-export default function Success({successForm}) {
+export default function Success({successForm, setSuccessForm}) {
 
-    function printa(){
-        console.log(successForm)
+    let navigate = useNavigate()
+    
+    function backHome(){
+        setSuccessForm({
+            ...successForm,
+            name:'',
+            cpf:'',
+            title:'',
+            date:'',
+            hour:'',
+            ids:''
+        })
+        navigate('/')
     }
 
     return(
@@ -14,20 +26,19 @@ export default function Success({successForm}) {
             </Instruction>
             <List>
                 <h1>Filme e sessão</h1>
-                <p>Enola Holmes</p>
-                <p>24/06/2021 - 15:00</p>
+                <p>{successForm.title}</p>
+                <p>{successForm.date} - {successForm.hour}</p>
             </List>
             <List>
                 <h1>Ingressos</h1>
-                <p>assento 1</p>
-                <p>assento 2</p>
+                {successForm.ids.map((id, index) => <p key={index}>assento {id}</p>)}
             </List>
             <List>
                 <h1>Comprador</h1>
-                <p>Nome: João da Silva Sauro</p>
-                <p>CPF: 123.456.789-10</p>
+                <p>Nome: {successForm.name}</p>
+                <p>CPF: {successForm.cpf}</p>
             </List>
-            <button onClick={() => printa}>clica ae</button>
+            <Home onClick={() => backHome()}>Voltar pra Home</Home>
         </Container>
     )
 }
@@ -91,5 +102,30 @@ const List = styled.div`
         letter-spacing: 0.04em;
 
         color: #293845;
+    }
+`
+
+const Home = styled.div`
+    margin-top: 65px;
+    width: 225px;
+    height: 42px;
+    background: #E8833A;
+    border-radius: 3px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: 0.04em;
+    color: #FFFFFF;
+    transition: 100ms;
+    cursor: pointer;
+
+    &:active{
+        filter: brightness(85%);
+        transform: translateY(1px);
     }
 `

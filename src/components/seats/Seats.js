@@ -8,15 +8,16 @@ import Loading from "../loading/Loading"
 import Seat from "./Seat"
 import Forms from "../forms/Forms"
 
-export default function Seats() {
+export default function Seats({successForm, setSuccessForm}) {
     const [sessionInf, setSessionInf] = useState([])
     const [seat, setSeat] = useState([])
+    const [seatNumber, setSeatNumber] = useState([])
     const { idSessao } = useParams()
     let [ids, setIds] =useState([])
-    let [successForm, setSuccessForm] = useState()
+    
 
     const [form, setForm] = useState({
-        ids: ids,
+        ids: [],
         name: '',
         cpf: ''
     })
@@ -25,6 +26,12 @@ export default function Seats() {
 
     useEffect(()=> {
         let organize = ids.sort((a, b) => a - b)
+        let organizeSeat = seatNumber.sort((a, b) => a - b)
+
+        setSuccessForm({
+            ...successForm,
+            ids:organizeSeat
+        })
 
         setForm({
             ...form,
@@ -38,7 +45,12 @@ export default function Seats() {
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${idSessao}/seats`)
         promisse.then((r) => {setSessionInf(r.data)
                                 setSeat(r.data.seats)
-                                setSuccessForm(r.data)})
+                                setSuccessForm({
+                                    title: r.data.movie.title,
+                                    date: r.data.day.date,
+                                    hour: r.data.name,
+                                })
+                            })
     },[idSessao])
 
     if(sessionInf.length === 0){
@@ -49,7 +61,8 @@ export default function Seats() {
                 <Description>Selecione o(s) assento(s)</Description>
                 <Container>
                     <List>
-                        {seat.map((r, index) => <Seat isAvailable={r.isAvailable} key={index} seatID={r.id}  ids={ids} setIds={setIds} form={form} setForm={setForm}>{r.name}</Seat>)}
+                        {seat.map((r, index) => <Seat isAvailable={r.isAvailable} key={index} seatID={r.id}  ids={ids} setIds={setIds} form={form} setForm={setForm} seatNumber={seatNumber}
+                        setSeatNumber={setSeatNumber}>{r.name}</Seat>)}
                     </List>
                     <div className="side">
                         <span>
@@ -65,7 +78,7 @@ export default function Seats() {
                             <p>Indisponivel</p>
                         </span>
                     </div>
-                    <Forms form={form} setForm={setForm} ids={ids} successForm={successForm}/>
+                    <Forms form={form} setForm={setForm} ids={ids} successForm={successForm} setSuccessForm={setSuccessForm} />
                 </Container>
                 <Footer title={sessionInf.movie.title} posterURL={sessionInf.movie.posterURL} sessionDay={sessionInf.day.weekday} sessionHour={sessionInf.name}/>
             </>
