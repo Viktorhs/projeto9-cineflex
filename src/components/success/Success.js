@@ -3,6 +3,38 @@ import styled from "styled-components"
 
 
 export default function Success({successForm, setSuccessForm}) {
+      
+        
+        function cpfAjuste(){
+            let splitCPF = successForm.cpf.split('')
+            let cpf = []
+
+            for(let i = 0; i < splitCPF.length;i++){
+                if(i === 2){
+                    cpf.push(splitCPF[i])
+                    cpf.push('.')
+                    continue
+                }
+                if(i === 5){
+                    cpf.push(splitCPF[i])
+                    cpf.push('.')
+                    continue
+                }
+                if(i  === 8){
+                    cpf.push(splitCPF[i])
+                    cpf.push('-')
+                    continue
+                }else{
+                    cpf.push(splitCPF[i])
+                    continue
+                }
+            }
+            return cpf.join('')
+        }
+        let cpfAjustado = cpfAjuste()
+
+
+
 
     let navigate = useNavigate()
     
@@ -36,7 +68,7 @@ export default function Success({successForm, setSuccessForm}) {
             <List>
                 <h1>Comprador</h1>
                 <p>Nome: {successForm.name}</p>
-                <p>CPF: {successForm.cpf}</p>
+                <p>CPF: {cpfAjustado}</p>
             </List>
             <Home onClick={() => backHome()}>Voltar pra Home</Home>
         </Container>
