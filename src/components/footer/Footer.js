@@ -20,9 +20,9 @@ const SessionInf = styled.footer`
     z-index: 4;
     width: 100vw;
     height: 117px;
-    padding: 10px;
-    left: 0px;
-    bottom: 0px;
+    padding: 0 10px;
+    left: 0;
+    bottom: 0;
 
     display: flex;
     align-items: center;

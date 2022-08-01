@@ -58,7 +58,6 @@ const Form = styled.form`
         height: 50px;
         padding: 10px;
         margin-bottom: 7px;
-        background-color: #ffffff;
     }
     input::placeholder{
         font-style: italic;

@@ -14,9 +14,8 @@ export default function Session({weekday, date, days, index}) {
     )
 }
 
-const Container = styled.div`
-    width: 100vw;
-    margin: 0 23px 23px 23px;
+const Container = styled.div`       
+    padding: 0 0 23px 23px;
 
     h3{
         font-weight: 400;
@@ -38,7 +37,7 @@ const Container = styled.div`
 `
 
 const linkStyle = {
-    textDecoration: "none",
+    textDecoration: "none"
   };
 
 const Button = styled.div`
